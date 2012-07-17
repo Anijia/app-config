@@ -1,0 +1,22 @@
+script
+  flushEnv({
+    appId: "#{appId}"
+  });
+
+
+.container
+  h1= pageTitle
+  .apps-recommended.apps
+    if recommendedApps.length > 0
+      each app in recommendedApps 
+        !=partial('app/item', {locals: app})
+    else
+      p 没有推荐APP
+  .apps-all.apps
+    if apps.length > 0
+      each app in apps 
+        !=partial('app/item', {locals: app})
+    else
+      p 没有APP
+  script(src="/js/jquery-ui-1.8.21.custom.min.js")
+  script(src="/js/app.js")

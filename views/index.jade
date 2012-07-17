@@ -1,0 +1,10 @@
+.container
+  h1= pageTitle
+  .page-content
+    a(href="/app-create") 创建APP
+    .apps
+      if apps.length > 0
+        each app in apps 
+          !=partial('app/item', {locals: app})
+      else
+        p 没有APP

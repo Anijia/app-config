@@ -1,0 +1,29 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.app {
+  float: left;
+  margin: 0 10px 10px 0;
+  position: relative;
+}
+
+.app .hd {
+  position: absolute;
+  right: -12px;
+  top: -7px;
+}
+
+.apps {
+  border: 2px dashed #eee;
+  overflow: hidden;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+

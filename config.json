@@ -1,0 +1,42 @@
+{
+  "site": {
+    "title": "APP推荐配置工具",
+    "cookie_maxAge": 86400000,
+    "base_uri": "http://sp.zs.163.com",
+    "upload_dir": "public/uploads"
+  },
+
+  "environment": {
+    "development": {
+      "db": {
+        "port": 3306,
+        "database": "appConfig",
+        "user": "root",
+        "password": "root"
+      },
+      "server": {
+        "port": 3000,
+        "host": "127.0.0.1"
+      },
+      "redis": {
+        "port": 6379
+      }
+    },
+
+    "production": {
+      "db": {
+        "port": 4306,
+        "database": "appConfig",
+        "user": "root",
+        "password": ""
+      },
+      "server": {
+        "port": 8990,
+        "host": "127.0.0.1"
+      },
+      "redis": {
+	      "port": 6379
+      }
+    }
+  }
+}
