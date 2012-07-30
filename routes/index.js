@@ -1,8 +1,7 @@
 var config = require('../config'),
     App = require('../models/app'),
     Api = require('../lib/api'),
-    objectUtil = require('../lib/object-util'),
-    async = require('async');
+    objectUtil = require('../lib/object-util');
 
 /*
  * GET home page.
@@ -10,7 +9,7 @@ var config = require('../config'),
 
 
 exports.index = function(req, res){
-  App.getAll(function(err, rows) {
+  App.getAllRows(function(err, rows) {
     res.render('index', {
         siteTitle: config.site.title,
         pageTitle: config.site.title,
@@ -19,62 +18,39 @@ exports.index = function(req, res){
   });
 };
 
-exports.appCreateForm = function(req, res){
-  res.render('app/create', {
-    siteTitle: config.site.title,
-    pageTitle: '创建APP'
-  });
-};
-
-exports.appCreate = function(req, res){
-  var appData = req.body.app;
-
-  App.create(appData, function(err, rows) {
-    res.redirect('/app/' + appData.id);
-  });
-};
-
-exports.app = function(req, res){
-  var appId = req.params.id;
-
-  async.auto({
-    getRecommended: function(callback) {
-      App.recommend.getRecommended(appId, callback);
-    },
-
-    getApp: function(callback) {
-      App.getById(appId, callback);
-    },
-
-    getUnrecommended: ['getApp', function(callback, data) {
-      var app = data.getApp,
-          params = {
-            platform: app.platform
-          };
-
-      App.getByCondition(params, function(err, unrecommendedApps) {
-        if (err) return callback(err);
-        callback(null, unrecommendedApps);
-      });
-    }]}, function(err, data) {
-      var app = data.getApp,
-          data = {
-            siteTitle: config.site.title,
-            pageTitle: app.title,
-            recommendedApps: data.getRecommended,
-            apps: data.getUnrecommended,
-            appId: appId,
-            device: app.device,
-            platform: app.platform
-          };
-
-      res.render('app/edit', data);
-    });
-};
 
 exports.getConfig = function(req, res) {
   App.recommend.getRecommended(req.params.appId, function(err, data) {
-    res.send(data);
+    var result = data.map(function(item, i) {
+      var i, result = {};
+
+      var replaceMap = {
+        _id: 'id',
+        _schema: 'schema'
+      };
+
+      var excludedMap = {
+        appId: 1
+      };
+
+      var prefixMap = {
+        lIconUrl: config.site.base_uri,
+        hIconUrl: config.site.base_uri
+      };
+
+      for (i in item) {
+        if (i in excludedMap) continue;
+        if (i in prefixMap) {
+          result[i] = prefixMap[i] + item[i];  
+        } else if (i in replaceMap) {
+          result[replaceMap[i]] = item[i];
+        } else {
+          result[i] = item[i];
+        }
+      } 
+      return result;
+    });
+    res.send(result);
   });
 };
 
@@ -84,6 +60,10 @@ exports.api = function(req, res) {
 
   params = objectUtil.extend({}, req.query, req.body);
   Api.call(apiName, params, function(err, data) {
+    if (err) return res.send(err, 500);
     res.send(data);
   });
 };
+
+exports.app = require('./app');
+exports.recommend = require('./recommend');

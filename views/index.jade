@@ -1,10 +1,27 @@
 .container
   h1= pageTitle
   .page-content
-    a(href="/app-create") 创建APP
+    a.btn.btn-primary(href="/app/create") 创建APP
     .apps
       if apps.length > 0
-        each app in apps 
-          !=partial('app/item', {locals: app})
+        table.table
+          tr
+            th 名称
+            th 平台
+            th 设备
+            th 操作
+          each app in apps 
+            tr(id="app-" + app.id)
+              td= app.name
+              td= app.platform
+              td= app.device
+              td
+                a(href="/app/#{app.id}/config") 配置
+                a(href="/app/#{app.id}/edit") 编辑
+                a.del-btn(href="javascript:void(0)") 删除
       else
         p 没有APP
+
+script(src="/js/behavior/app-actions.js")
+script
+  NE.initBehaviors({'app-actions': !{JSON.stringify(apps)}});

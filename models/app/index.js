@@ -2,18 +2,24 @@ var dbConn = require('../../lib/mysql').connection;
 
 var app = {
   create: function(data, callback) {
-    dbConn.query('insert into app(id, platform, device, title, icon, iconHd, url, customUrl) values (?, ?, ?, ?, ?, ?, ?, ?)', [data.id, data.platform, data.device, data.title, data.icon, data.iconHd, data.url, data.customUrl], function(err, rows) {
-      callback(err, rows); 
-    });
+    dbConn.query('insert into app(id, platform, device, name) values (?, ?, ?, ?)', [data.id, data.platform, data.device, data.name], callback);
   },
 
-  getById: function(id, callback) {
+  update: function(data, callback) {
+    dbConn.query('update app set platform = ?, device = ?, name = ? where id = ?', [data.platform, data.device, data.name, data.id], callback);
+  },
+
+  del: function(data, callback) {
+    dbConn.query('delete from app where id = ?', [data.id], callback);
+  },
+
+  getRowById: function(id, callback) {
     dbConn.query('select * from app where id = ?', [id], function(err, rows) {
       callback(err, !err && rows.length && rows[0]); 
     });
   },
 
-  getAll: function(callback) {
+  getAllRows: function(callback) {
     dbConn.query('select * from app', function(err, rows) {
       callback(err, rows); 
     });

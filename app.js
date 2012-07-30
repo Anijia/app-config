@@ -4,6 +4,7 @@
  */
 
 var express = require('express')
+  , config = require('./config')
   , routes = require('./routes');
 
 var app = module.exports = express.createServer();
@@ -13,7 +14,7 @@ var app = module.exports = express.createServer();
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.use(express.bodyParser());
+  app.use(express.bodyParser({uploadDir: __dirname + '/public' + config.site.upload_dir}));
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
@@ -30,9 +31,15 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
-app.get('/app-create', routes.appCreateForm);
-app.post('/app', routes.appCreate);
-app.get('/app/:id', routes.app);
+
+app.get('/app/create', routes.app.create);
+app.get('/app/:id/edit', routes.app.edit);
+app.get('/app/:id/config', routes.app.config);
+app.post('/app', routes.app.save);
+
+app.get('/app/:appId/recommend/create', routes.recommend.create);
+app.get('/app/:appId/recommend/:id/edit', routes.recommend.edit);
+app.post('/recommend', routes.recommend.save);
 
 app.get(/\/api\/(.*)/, routes.api);
 app.post(/\/api\/(.*)/, routes.api);

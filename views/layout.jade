@@ -3,9 +3,15 @@ html
   head
     title= siteTitle
     link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="/css/externals/bootstrap/bootstrap.css")
+    link(rel="stylesheet", href="/css/externals/bootstrap/bootstrap-responsive.css")
     script(src="/js/jquery-1.7.2.min.js")
-    script(src="/js/boot.js")
+    script(src="/js/init.js")
   body
-    #header
-      a(href="/") 首页  
+    .navbar
+      .navbar-inner
+        .container
+          a.brand(href="/") APP配置工具
+          ul.nav
+            li: a(href="/app/create") 创建APP
     != body

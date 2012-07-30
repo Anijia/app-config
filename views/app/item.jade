@@ -1,4 +1,23 @@
-a.app(href="/app/#{id}", data-id="#{id}")
-  if device == "pad"
-    img.hd(src="/img/icon-hd.gif")
-  img(src="#{icon}", title="编辑#{title}的推荐APP")
+.container
+  h1= pageTitle
+  form(method="POST", action="/app")
+    .form-field
+      label(for="app-id") ID
+      input(type="text", name="app[id]", value=app.id, readonly=app.id)
+    .form-field
+      label(for="app-name") 名称
+      input(type="text", name="app[name]", value=app.name)
+    .form-field
+      label(for="app-platform") 平台
+      select(name="app[platform]")
+        option(value="ios", selected=app.platform == "ios") IOS
+        option(value="android", selected=app.platform == "android") Android
+    .form-field
+      label(for="app-device") 设备
+      select(name="app[device]")
+        option(value="phone", selected=app.device== "phone") Phone
+        option(value="pad", selected=app.device== "pad") Pad
+    input(type="hidden", name="action", value=action)
+    .form-actions
+      input.btn.btn-primary(type="submit")
+      a.btn(href="/") 取消

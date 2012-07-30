@@ -2,67 +2,51 @@ var dbConn = require('../../lib/mysql').connection,
     async = require('async');
 
 var Recommend = {
-  add: function(params, callback) {
-    dbConn.query('insert into appRecommend(sourceId, targetId) values(?, ?)', [params.sourceId, params.targetId], callback);
+  create: function(params, callback) {
+    var app = params.app;
+    dbConn.query('insert into recommended_app(_id, appId, displayName, lIconUrl, hIconUrl, downloadUrl, _schema) values(?, ?, ?, ?, ?, ?, ?)', [app._id, params.appId, app.displayName, app.lIconUrl, app.hIconUrl, app.downloadUrl, app._schema || null], callback);
+  },
+
+  update: function(data, callback) {
+    var update = function(table, data, conditions, callback) {
+      var sql = 'update ' + table + ' set';
+      var i, params = [];
+      var where = [], whereParams = [];
+
+      for (i in data) {
+        if (~conditions.indexOf(i)) {
+          where.push(i + ' = ?');
+          whereParams.push(data[i]);
+        } else {
+          sql += ' ' + i + ' = ?,';
+          params.push(data[i]);
+        }
+      }
+      sql = sql.slice(0, -1);
+
+      if (where.length > 0) {
+        sql += ' where ' + where.join(' and ');
+        params = params.concat(whereParams);
+      }
+
+      dbConn.query(sql, params, callback);
+    };
+    
+    update('recommended_app', data.app, ['id'], callback);
+  },
+
+  getRowById: function(id, callback) {
+    dbConn.query('select * from recommended_app where id = ?', [id], function(err, rows) {
+      callback(err, !err && rows.length && rows[0]); 
+    });
   },
 
   del: function(params, callback) {
-    dbConn.query('delete from appRecommend where sourceId = ? and targetId = ?', [params.sourceId, params.targetId], callback);
-  },
-
-  getRecommendedList: function(id, callback) {
-    dbConn.query('select * from appRecommend where sourceId = ?', [id], callback);
+    dbConn.query('delete from recommended_app where id = ? and appId = ?', [params.recommendAppId, params.appId], callback);
   },
 
   getRecommended: function(id, callback) {
-    async.waterfall([
-      function(callback) {
-        Recommend.getRecommendedList(id, callback);
-      },
-      function(relationList, metadata, callback) {
-        var len = relationList.length,
-            appList = [];
-
-        if (len == 0) return callback(null, appList);
-
-        relationList.forEach(function(relation, i) {
-          dbConn.query('select * from app where id = ?', [relation.targetId], function(err, rows) {
-            if (err) return callback(err);
-            appList = appList.concat(rows);
-            --len || callback(null, appList); 
-          });
-        });
-      }
-    ], callback);
-  },
-
-  getUnrecommended: function(id, callback) {
-    async.waterfall([
-      function(callback) {
-        Recommend.getRecommendedList(id, callback);
-      },
-      function(relationList, metadata, callback) {
-        var idList = [];
-
-        relationList.forEach(function(relation, i) {
-          idList.push(relation.targetId);
-        });
-
-        var sql = 'select * from app';
-        if (relationList.length > 0) { 
-          sql += ' where id not in (';
-          if (idList.length > 1) {
-            sql += new Array(idList.length).join('?,');
-            sql = sql.slice(0, -1);
-          } else {
-            sql += '?';
-          }
-          sql += ')';
-        } 
-
-        dbConn.query(sql, idList, callback);
-      }
-    ], callback);
+    dbConn.query('select * from recommended_app where appId = ?', [id], callback);
   }
 };
 

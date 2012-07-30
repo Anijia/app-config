@@ -3,14 +3,14 @@
     "title": "APP推荐配置工具",
     "cookie_maxAge": 86400000,
     "base_uri": "http://sp.zs.163.com",
-    "upload_dir": "public/uploads"
+    "upload_dir": "/uploads"
   },
 
   "environment": {
     "development": {
       "db": {
         "port": 3306,
-        "database": "appConfig",
+        "database": "app_config",
         "user": "root",
         "password": "root"
       },
@@ -26,7 +26,7 @@
     "production": {
       "db": {
         "port": 4306,
-        "database": "appConfig",
+        "database": "app_config",
         "user": "root",
         "password": ""
       },

@@ -1,0 +1,20 @@
+.container
+  .hgroup
+    h1= pageTitle
+    h2 平台：#{app.platform} 设备：#{app.device}
+  .page-content
+    a.btn.btn-primary(href="/app/#{app.id}/recommend/create") 添加推荐APP
+    .apps
+      if recommendedApps.length > 0
+        each recommendedApp in recommendedApps
+          .app(id="app-#{recommendedApp.id}")
+            img(src="#{recommendedApp.lIconUrl}", title="#{recommendedApp.displayName}")
+            .actions
+              a(href="/app/#{app.id}/recommend/#{recommendedApp.id}/edit") 编辑
+              a.del-btn(href="javascript:void(0)") 删除
+      else
+        p 没有推荐APP
+script(src="/js/behavior/app-config.js")
+script
+  NE.addCfg({appId: '!{app.id}'});
+  NE.initBehaviors({'app-config': !{JSON.stringify(recommendedApps)}});

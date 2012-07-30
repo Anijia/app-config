@@ -1,22 +1,26 @@
-CREATE DATABASE `appConfig`;
+CREATE DATABASE `app_config`;
 
-use `appConfig`;
+use `app_config`;
 
 CREATE TABLE `app` (
   `id` VARCHAR(255) NOT NULL,
-  `title` TEXT NOT NULL,
-  `icon` VARCHAR(255) NOT NULL,
-  `iconHd` VARCHAR(255) NOT NULL,
-  `url` VARCHAR(255) NOT NULL,
-  `customUrl` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(566) NOT NULL,
   `platform` VARCHAR(255) NOT NULL,
   `device` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `appRecommend` (
+CREATE TABLE `recommended_app` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `sourceId` VARCHAR(255) NOT NULL,
-  `targetId` VARCHAR(255) NOT NULL,
+  `_id` VARCHAR(255) NOT NULL,
+  `appId` VARCHAR(255) NOT NULL,
+  `displayName` VARCHAR(566) NOT NULL,
+  `lIconUrl` TEXT NOT NULL,
+  `hIconUrl` TEXT NOT NULL,
+  `downloadUrl` TEXT NOT NULL,
+  `_schema` VARCHAR(255),
+  INDEX(lIconUrl(500)),
+  INDEX(hIconUrl(500)),
+  FOREIGN KEY(appId) references app(id) on delete cascade on update cascade,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
