@@ -2,7 +2,7 @@
   "site": {
     "title": "APP推荐配置工具",
     "cookie_maxAge": 86400000,
-    "base_uri": "http://sp.zs.163.com",
+    "base_uri": "http://123.58.182.10:5000",
     "upload_dir": "/uploads"
   },
 
@@ -25,7 +25,7 @@
 
     "production": {
       "db": {
-        "port": 4306,
+        "port": 3306,
         "database": "app_config",
         "user": "root",
         "password": ""
