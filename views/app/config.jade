@@ -8,6 +8,7 @@
       if recommendedApps.length > 0
         each recommendedApp in recommendedApps
           .app(id="app-#{recommendedApp.id}")
+            h3= recommendedApp.displayName
             img(src="#{recommendedApp.lIconUrl}", title="#{recommendedApp.displayName}")
             .actions
               a(href="/app/#{app.id}/recommend/#{recommendedApp.id}/edit") 编辑

@@ -37,7 +37,7 @@ var app = module.exports = {
     for (i in req.files) {
       file = req.files[i];
       if (file.size == 0) continue;
-      data.app[i] = config.site.upload_dir + '/' + file.path.split('\\').pop();
+      data.app[i] = config.site.upload_dir + '/' + file.path.split(/[\/\\]/).pop();
     }
 
     App.recommend[data.action](data, function(err, queryResult) {
