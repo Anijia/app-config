@@ -46,6 +46,6 @@ app.post(/\/api\/(.*)/, routes.api);
 
 app.get('/dma/:platform/:device/:appId/app.json', routes.getConfig);
 
-app.listen(3000, function(){
+app.listen(config.server.port, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });

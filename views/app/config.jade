@@ -11,8 +11,8 @@
             h3= recommendedApp.displayName
             img(src="#{recommendedApp.lIconUrl}", title="#{recommendedApp.displayName}")
             .actions
-              a(href="/app/#{app.id}/recommend/#{recommendedApp.id}/edit") 编辑
-              a.del-btn(href="javascript:void(0)") 删除
+              a.btn(href="/app/#{app.id}/recommend/#{recommendedApp.id}/edit") 编辑
+              a.btn.del-btn(href="javascript:void(0)") 删除
       else
         p 没有推荐APP
 script(src="/js/behavior/app-config.js")

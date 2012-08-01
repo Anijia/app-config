@@ -12,7 +12,6 @@ CREATE TABLE `app` (
 
 CREATE TABLE `recommended_app` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `_id` VARCHAR(255) NOT NULL,
   `appId` VARCHAR(255) NOT NULL,
   `displayName` VARCHAR(566) NOT NULL,
   `lIconUrl` TEXT NOT NULL,

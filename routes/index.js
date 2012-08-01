@@ -25,7 +25,6 @@ exports.getConfig = function(req, res) {
       var i, result = {};
 
       var replaceMap = {
-        _id: 'id',
         _schema: 'schema'
       };
 

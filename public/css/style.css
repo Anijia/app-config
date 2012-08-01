@@ -28,3 +28,10 @@ a {
   margin-right: 1em;
 }
 
+.app img {
+  margin-bottom: 1em; 
+}
+
+.btn + .btn {
+  margin-left: .5em;
+}

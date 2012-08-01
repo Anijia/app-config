@@ -2,18 +2,17 @@
   h1= pageTitle
   form(method="POST", action="/recommend", enctype="multipart/form-data")
     .form-field
-      label(for="app-id") ID
-      input(type="text", name="app[_id]", value=app._id)
-    .form-field
       label(for="app-name") 名称
       input(type="text", name="app[displayName]", value=app.displayName)
     .form-field
       label(for="app-icon") 图标
+      p IOS应用图标最小尺寸47*47
       - if (app.lIconUrl)
         img(src=app.lIconUrl)
       input#app-icon(type="file", name="lIconUrl")
     .form-field
       label(for="app-iconHd") 高清图标
+      p IOS应用图标最小尺寸114*114
       - if (app.hIconUrl)
         img(src=app.hIconUrl)
       input#app-iconHd(type="file", name="hIconUrl")
@@ -22,6 +21,7 @@
       input(type="text", name="app[downloadUrl]", value=app.downloadUrl)
     .form-field
       label(for="app-schema") Schema
+      p iOS应用填写Schema信息，Android应用填写程序Id
       input(type="text", name="app[_schema]", value=app._schema)
     input(type="hidden", name="appId", value="#{appId}")
     input(type="hidden", name="action", value="#{action}")
