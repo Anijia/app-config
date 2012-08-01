@@ -1,21 +1,8 @@
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
 
 .app {
   float: left;
   margin: 0 10px 10px 0;
   position: relative;
-}
-
-.app .hd {
-  position: absolute;
-  right: -12px;
-  top: -7px;
 }
 
 .apps {
@@ -24,14 +11,15 @@ a {
   margin-top: 20px;
 }
 
-.form-actions .btn {
-  margin-right: 1em;
-}
-
 .app img {
   margin-bottom: 1em; 
 }
 
 .btn + .btn {
   margin-left: .5em;
+}
+
+form .help-block {
+  color: #999;
+  color: .9em;
 }
