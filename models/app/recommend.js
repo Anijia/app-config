@@ -4,7 +4,7 @@ var dbConn = require('../../lib/mysql').connection,
 var Recommend = {
   create: function(params, callback) {
     var app = params.app;
-    dbConn.query('insert into recommended_app(_id, appId, displayName, lIconUrl, hIconUrl, downloadUrl, _schema) values(?, ?, ?, ?, ?, ?, ?)', [app._id, params.appId, app.displayName, app.lIconUrl, app.hIconUrl, app.downloadUrl, app._schema || null], callback);
+    dbConn.query('insert into recommended_app(appId, displayName, lIconUrl, hIconUrl, downloadUrl, _schema) values(?, ?, ?, ?, ?, ?)', [params.appId, app.displayName, app.lIconUrl, app.hIconUrl, app.downloadUrl, app._schema || null], callback);
   },
 
   update: function(data, callback) {
