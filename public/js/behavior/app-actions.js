@@ -1,6 +1,7 @@
 NE.behavior('app-actions', function(config, statics) {
+  if (!config) return;
   var id = config.id;
-  var $el = $('#app-' + id); 
+  var $el = $(document.getElementById('app-' + id)); 
   $el.delegate('.del-btn', 'click', del);
   
   function del() {

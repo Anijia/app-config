@@ -29,7 +29,8 @@ exports.getConfig = function(req, res) {
       };
 
       var excludedMap = {
-        appId: 1
+        appId: 1,
+        id: 1
       };
 
       var prefixMap = {
